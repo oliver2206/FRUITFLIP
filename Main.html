@@ -23,20 +23,21 @@
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             z-index: 2; /* Bring header above fruits */
             position: relative;
+            padding: 0 20px;
         }
 
         .logo {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             margin-bottom: 15px;
             border-radius: 50%;
         }
 
         h1 {
-            font-size: 40px;
+            font-size: 2rem;
             font-weight: bold;
             text-transform: uppercase;
             color: #000000;
@@ -54,18 +55,18 @@
             z-index: 2; /* Bring buttons above fruits */
         }
 
-        /* Button Styles - From Uiverse.io by Mhyar-nsi */
         button {
             background-color: #e7262600;
             color: #000000;
             border: none;
             cursor: pointer;
             border-radius: 8px;
-            width: 320px;
-            height: 75px;
-            font-size: 16px;
+            width: 280px;
+            height: 60px;
+            font-size: 1rem;
             font-weight: bold;
             transition: 0.3s;
+            text-align: center;
         }
 
         button:hover {
@@ -92,6 +93,53 @@
             50% { transform: translate(250px, 100px); }
             75% { transform: translate(-150px, -100px); }
             100% { transform: translate(0, 0); }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                gap: 10px;
+            }
+
+            button {
+                width: 240px;
+                height: 50px;
+                font-size: 0.9rem;
+            }
+
+            .fruit {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            button {
+                width: 200px;
+                height: 45px;
+                font-size: 0.85rem;
+            }
+
+            .fruit {
+                font-size: 2.5rem;
+            }
         }
     </style>
 </head>
