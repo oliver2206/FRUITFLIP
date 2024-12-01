@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candy Crush Simplified</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f7e7ce;
+        }
+
+        .header {
+            padding: 20px;
+            background-color: #ff6f61;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .game-container {
+            display: grid;
+            grid-template-columns: repeat(8, 70px);
+            grid-template-rows: repeat(8, 70px);
+            gap: 5px;
+            justify-content: center;
+            margin: 20px auto;
+        }
+
+        .tile {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .tile:hover {
+            transform: scale(1.1);
+        }
+
+        .tile.match {
+            animation: fadeOut 0.5s ease, explode 0.5s ease forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.7; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        .footer {
+            padding: 10px;
+            background-color: #ff6f61;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Candy Crush Simplified</div>
+    <div class="game-container" id="gameContainer"></div>
+    <div class="footer">
+        Score: <span id="score">0</span> |
+        Cherries Collected: <span id="cherriesCollected">0</span> / 50 |
+        Grapes Collected: <span id="grapesCollected">0</span> / 50
+    </div>
+
+    <script>
+        const gridSize = 8;
+        const candyTypes = ['🍒', '🍋', '🍇', '🍉', '🍍', '🍎'];
+        let grid = [];
+        let score = 0;
+        let cherriesCollected = 0;
+        let grapesCollected = 0;
+        const targetCherries = 50;
+        const targetGrapes = 50;
+        let startX, startY, firstTile = null;
+    
+        // Initialize the game grid
+        function initializeGame() {
+            grid = [];
+            for (let i = 0; i < gridSize; i++) {
+                grid[i] = [];
+                for (let j = 0; j < gridSize; j++) {
+                    grid[i][j] = randomCandy();
+                }
+            }
+            renderGrid();
+        }
+    
+        // Render the grid
+        function renderGrid() {
+            const gameContainer = document.getElementById('gameContainer');
+            gameContainer.innerHTML = '';
+            for (let i = 0; i < gridSize; i++) {
+                for (let j = 0; j < gridSize; j++) {
+                    const tile = document.createElement('div');
+                    tile.classList.add('tile');
+                    tile.dataset.row = i;
+                    tile.dataset.col = j;
+                    tile.textContent = grid[i][j];
+    
+                    tile.addEventListener('touchstart', handleTouchStart);
+                    tile.addEventListener('touchend', handleTouchEnd);
+                    tile.addEventListener('mousedown', handleTouchStart);
+                    tile.addEventListener('mouseup', handleTouchEnd);
+    
+                    gameContainer.appendChild(tile);
+                }
+            }
+            document.getElementById('score').textContent = score;
+            document.getElementById('cherriesCollected').textContent = cherriesCollected;
+            document.getElementById('grapesCollected').textContent = grapesCollected;
+            checkTargets();
+        }
+    
+        // Handle touch/mouse start
+        function handleTouchStart(event) {
+            startX = event.touches ? event.touches[0].clientX : event.clientX;
+            startY = event.touches ? event.touches[0].clientY : event.clientY;
+            const row = parseInt(event.target.dataset.row);
+            const col = parseInt(event.target.dataset.col);
+            firstTile = { row, col };
+        }
+    
+        // Handle touch/mouse end
+        function handleTouchEnd(event) {
+            let endX = event.changedTouches ? event.changedTouches[0].clientX : event.clientX;
+            let endY = event.changedTouches ? event.changedTouches[0].clientY : event.clientY;
+            if (!firstTile) return;
+    
+            const diffX = endX - startX;
+            const diffY = endY - startY;
+            let secondTile = null;
+    
+            // Determine swipe direction
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (diffX > 0 && firstTile.col < gridSize - 1) {
+                    secondTile = { row: firstTile.row, col: firstTile.col + 1 };
+                } else if (diffX < 0 && firstTile.col > 0) {
+                    secondTile = { row: firstTile.row, col: firstTile.col - 1 };
+                }
+            } else {
+                if (diffY > 0 && firstTile.row < gridSize - 1) {
+                    secondTile = { row: firstTile.row + 1, col: firstTile.col };
+                } else if (diffY < 0 && firstTile.row > 0) {
+                    secondTile = { row: firstTile.row - 1, col: firstTile.col };
+                }
+            }
+    
+            if (secondTile) {
+                swapTiles(firstTile, secondTile);
+                if (findMatches().length > 0) {
+                    processMatches();
+                } else {
+                    swapTiles(firstTile, secondTile); // Swap back if no match
+                }
+            }
+    
+            resetSelection();
+        }
+    
+        // Reset tile selection
+        function resetSelection() {
+            firstTile = null;
+        }
+    
+        // Swap two tiles
+        function swapTiles(tile1, tile2) {
+            const temp = grid[tile1.row][tile1.col];
+            grid[tile1.row][tile1.col] = grid[tile2.row][tile2.col];
+            grid[tile2.row][tile2.col] = temp;
+            renderGrid();
+        }
+    
+        // Find matches of length 3, 4, or 5 and more
+        function findMatches() {
+            const matches = [];
+    
+            // Check rows
+            for (let i = 0; i < gridSize; i++) {
+                let match = [{ row: i, col: 0 }];
+                for (let j = 1; j < gridSize; j++) {
+                    if (grid[i][j] === grid[i][j - 1]) {
+                        match.push({ row: i, col: j });
+                    } else {
+                        if (match.length >= 3) matches.push(match); // Store matches of 3 or more
+                        match = [{ row: i, col: j }];
+                    }
+                }
+                if (match.length >= 3) matches.push(match);
+            }
+    
+            // Check columns
+            for (let j = 0; j < gridSize; j++) {
+                let match = [{ row: 0, col: j }];
+                for (let i = 1; i < gridSize; i++) {
+                    if (grid[i][j] === grid[i - 1][j]) {
+                        match.push({ row: i, col: j });
+                    } else {
+                        if (match.length >= 3) matches.push(match); // Store matches of 3 or more
+                        match = [{ row: i, col: j }];
+                    }
+                }
+                if (match.length >= 3) matches.push(match);
+            }
+    
+            return matches;
+        }
+    
+        // Process matches and eliminate blocks
+        function processMatches() {
+            const matches = findMatches();
+            if (matches.length === 0) return;
+    
+            matches.forEach(match => {
+                match.forEach(({ row, col }) => {
+                    // If a match is made, collect fruits
+                    if (grid[row][col] === '🍒') {
+                        cherriesCollected++;
+                    } else if (grid[row][col] === '🍇') {
+                        grapesCollected++;
+                    }
+    
+                    const tileElement = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                    tileElement.classList.add('match'); // Add explode animation class
+                    grid[row][col] = null; // Remove matched block
+                });
+            });
+    
+            score += matches.length;
+    
+            // Cascade blocks (drop candies)
+            cascadeBlocks();
+    
+            // Check for new matches after blocks fall
+            setTimeout(() => {
+                if (findMatches().length > 0) {
+                    processMatches(); // Cascade again if new matches are found
+                }
+            }, 500); // Re-check for new matches after dropping
+        }
+    
+        // Cascade blocks (drop candies down)
+        function cascadeBlocks() {
+            for (let j = 0; j < gridSize; j++) {
+                let emptySpaces = 0;
+                // Drop candies down in columns
+                for (let i = gridSize - 1; i >= 0; i--) {
+                    if (grid[i][j] === null) {
+                        emptySpaces++;
+                    } else if (emptySpaces > 0) {
+                        grid[i + emptySpaces][j] = grid[i][j];
+                        grid[i][j] = null;
+                    }
+                }
+    
+                // Fill empty spaces with new random candies
+                for (let i = 0; i < emptySpaces; i++) {
+                    grid[i][j] = randomCandy();
+                }
+            }
+    
+            renderGrid();
+        }
+    
+        // Generate a random candy
+        function randomCandy() {
+            return candyTypes[Math.floor(Math.random() * candyTypes.length)];
+        }
+    
+        // Check if targets are met
+        function checkTargets() {
+            if (cherriesCollected >= targetCherries && grapesCollected >= targetGrapes) {
+                alert("You've collected all the cherries and grapes! Game Over!");
+            }
+        }
+    
+        initializeGame();
+    </script>
+</body>
+</html>
