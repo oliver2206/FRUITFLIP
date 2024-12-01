@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Home Page</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to right, #6a11cb, #2575fc); /* Subtle gradient background */
+            position: relative;
+            color: #fff;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            z-index: 2; /* Bring header above fruits */
+            position: relative;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 15px;
+            border-radius: 50%;
+        }
+
+        h1 {
+            font-size: 40px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 20px;
+            z-index: 2; /* Bring buttons above fruits */
+            position: relative;
+        }
+
+        .button {
+            display: block;
+            width: 320px;
+            margin: 15px auto;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            background: #444;
+            text-decoration: none;
+            border: 2px solid #777;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background: #555;
+            transform: scale(1.05);
+        }
+
+        .button:active {
+            background: #c52121;
+            transform: scale(0.95);
+        }
+
+        /* Fruits Animation */
+        .fruit {
+            position: absolute;
+            font-size: 5rem;
+            animation: bounce 5s infinite ease-in-out;
+            z-index: 1; /* Send fruits to the background */
+        }
+
+        @keyframes bounce {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(150px, -200px); }
+            50% { transform: translate(250px, 100px); }
+            75% { transform: translate(-150px, -100px); }
+            100% { transform: translate(0, 0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo and Title -->
+    <div class="header">
+        <img src="./PNGFILE/TILE.png" alt="Logo" class="logo" id="logo">
+        <h1 id="gameTitle">Fruit Fortune Flip</h1>
+    </div>
+
+    <!-- Button Container -->
+    <div class="container">
+        <a class="button" href="./iwant design.html">START</a>
+        <a class="button" href="./settings.html">SETTINGS</a>
+        <a class="button" href="./instructions.html">HOW TO PLAY</a>
+        <a class="button" href="./highscores.html">HIGH SCORES</a>
+    </div>
+
+    <!-- Bouncing Fruits -->
+    <div class="fruit" style="top: 20%; left: 10%;">🍎</div>
+    <div class="fruit" style="top: 50%; left: 80%;">🍊</div>
+    <div class="fruit" style="top: 30%; left: 50%;">🍌</div>
+    <div class="fruit" style="top: 70%; left: 20%;">🍇</div>
+
+    <script>
+        // Add more logic if needed for fruit interactions
+    </script>
+</body>
+</html>
