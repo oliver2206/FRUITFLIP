@@ -18,7 +18,7 @@
             align-items: center;
             background: linear-gradient(to right, #6a11cb, #2575fc); /* Subtle gradient background */
             position: relative;
-            color: #fff;
+            color: #000000;
         }
 
         .header {
@@ -39,42 +39,43 @@
             font-size: 40px;
             font-weight: bold;
             text-transform: uppercase;
-            color: #fff;
+            color: #000000;
             letter-spacing: 2px;
             margin: 0;
         }
 
+        /* Button Container */
         .container {
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
             margin-top: 20px;
             z-index: 2; /* Bring buttons above fruits */
-            position: relative;
         }
 
-        .button {
-            display: block;
-            width: 320px;
-            margin: 15px auto;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #fff;
-            background: #444;
-            text-decoration: none;
-            border: 2px solid #777;
-            border-radius: 15px;
+        /* Button Styles - From Uiverse.io by Mhyar-nsi */
+        button {
+            background-color: #e7262600;
+            color: #000000;
+            border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            width: 320px;
+            height: 75px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
         }
 
-        .button:hover {
-            background: #555;
-            transform: scale(1.05);
+        button:hover {
+            background-color: #00000000;
+            box-shadow: 0 0 0 20px #f8f8f80b;
+            color: #000000; 
         }
 
-        .button:active {
-            background: #c52121;
-            transform: scale(0.95);
+        a {
+            text-decoration: none;
         }
 
         /* Fruits Animation */
@@ -97,26 +98,22 @@
 <body>
     <!-- Header with Logo and Title -->
     <div class="header">
-        <img src="./PNGFILE/TILE.png" alt="Logo" class="logo" id="logo">
+        <img src="./PNGFILE/TILE 9090.png" alt="Logo" class="logo" id="logo">
         <h1 id="gameTitle">Fruit Fortune Flip</h1>
     </div>
 
     <!-- Button Container -->
     <div class="container">
-        <a class="button" href="./iwant design.html">START</a>
-        <a class="button" href="./settings.html">SETTINGS</a>
-        <a class="button" href="./instructions.html">HOW TO PLAY</a>
-        <a class="button" href="./highscores.html">HIGH SCORES</a>
+        <a href="./index.html"><button>START</button></a>
+        <a href="./settings.html"><button>SETTINGS</button></a>
+        <a href="./instructions.html"><button>HOW TO PLAY</button></a>
+        <a href="./highscores.html"><button>HIGH SCORES</button></a>
     </div>
-
+    
     <!-- Bouncing Fruits -->
     <div class="fruit" style="top: 20%; left: 10%;">🍎</div>
     <div class="fruit" style="top: 50%; left: 80%;">🍊</div>
     <div class="fruit" style="top: 30%; left: 50%;">🍌</div>
     <div class="fruit" style="top: 70%; left: 20%;">🍇</div>
-
-    <script>
-        // Add more logic if needed for fruit interactions
-    </script>
 </body>
 </html>
