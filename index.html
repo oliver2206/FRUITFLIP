@@ -2,291 +2,295 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tile Flip Challenge</title>
-    <style>
-        /* General Styles */
-        
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background-image: url('./PNGFILE./Cloverleaf.jpg.png');
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-        /* Header Styles */
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background: #000;
-            color: white;
-        }
-        
-        .header h1 {
-            margin: 0;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .logo {
-            width: 90px;
-            height: 90px;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-        /* Dropdown Styles */
-        
-        .dropdown {
-            position: absolute;
-            top: 60px;
-            left: 20px;
-            background-color: #ffffff;
-            color: #333;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            display: none;
-            flex-direction: column;
-        }
-        
-        .dropdown a {
-            text-decoration: none;
-            color: #333;
-            padding: 8px;
-            margin: 5px 0;
-            border-radius: 3px;
-            transition: background-color 0.3s;
-        }
-        
-        .dropdown a:hover {
-            background-color: #ddd;
-        }
-        /* Game Container */
-        
-        .game-container {
-            display: grid;
-            grid-template-columns: repeat(6, 90px);
-            /* 6 columns */
-            grid-template-rows: repeat(6, 90px);
-            /* 6 rows */
-            gap: 10px;
-            justify-content: center;
-            margin: 50px auto;
-        }
-        
-        .tile {
-            width: 90px;
-            height: 90px;
-            background-image: url('./GvbqSreaAAAcB6K.jpg');
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 45px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            text-align: center;
-        }
-        
-        .tile.revealed {
-            background: #188d0666;
-            cursor: default;
-        }
-        
-        .tile.matched {
-            background: #048708;
-            color: rgb(58, 30, 30);
-            cursor: default;
-            opacity: 0.7;
-        }
-        
-        .tile.hidden {
-            visibility: hidden;
-        }
-        /* Footer Styles */
-        
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #000;
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            font-size: 16px;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-        }
-        
-        .coin-board {
-            display: flex;
-            align-items: center;
-            font-size: 18px;
-        }
-        
-        .coin-board img {
-            width: 30px;
-            height: 30px;
-            margin-right: 10px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tile Flip Challenge</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-image: url('https://i.pinimg.com/736x/e3/a4/48/e3a4482bff09d997f675af868e43ff2b.jpg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    /* Header Styles */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background: #000;
+      color: white;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .logo {
+      width: 90px;
+      height: 90px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .coin-board {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+    }
+
+    .coin-board img {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+    }
+
+    /* Dropdown Styles */
+    .dropdown {
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      background-color: #ffffff;
+      color: #333;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      display: none;
+      flex-direction: column;
+    }
+
+    .dropdown a {
+      text-decoration: none;
+      color: #333;
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 3px;
+      transition: background-color 0.3s;
+    }
+
+    .dropdown a:hover {
+      background-color: #ddd;
+    }
+
+    /* Game Container */
+    .game-container {
+      display: grid;
+      grid-template-columns: repeat(6, 90px);
+      grid-template-rows: repeat(6, 90px);
+      gap: 10px;
+      justify-content: center;
+      margin: 50px auto;
+    }
+
+    .tile {
+      width: 90px;
+      height: 90px;
+      background-image: url('./Cloverleaf.jpg.png');
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 45px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+
+    .tile.revealed {
+      background: #188d0666;
+      cursor: default;
+    }
+
+    .tile.matched {
+      background: #048708;
+      color: rgb(58, 30, 30);
+      cursor: default;
+      opacity: 0.7;
+    }
+
+    .tile.hidden {
+      visibility: hidden;
+    }
+
+    /* Footer Styles */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #000;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 16px;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    }
+  </style>
 </head>
 
 <body>
-    <div class="header">
-        <div class="title-logo">
-            <img src="" alt="Logo" class="logo" id="logo">
-            <h1 id="gameTitle"></h1>
-        </div>
-
+  <div class="header">
+    <div class="title-logo">
+      <img src="" alt="Logo" class="logo" id="logo" />
+      <h1 id="gameTitle">Tile Flip Challenge</h1>
     </div>
-
-    <!-- Dropdown Menu -->
-    <div class="dropdown" id="dropdownMenu">
-        <a href="#" id="settingsLink">Settings</a>
-        <a href="#" id="leaderboardLink">Leaderboard</a>
-        <a href="#" id="helpLink">Help</a>
-        <a href="./TILE.html" id="saveLink">Save</a>
+    <div class="coin-board">
+      <img src="https://cdn-icons-png.flaticon.com/512/138/138281.png" alt="Coin" />
+      <span id="coinCount">100</span>
     </div>
+  </div>
 
-    <div class="game-container" id="gameContainer"></div>
+  <!-- Dropdown Menu -->
+  <div class="dropdown" id="dropdownMenu">
+    <a href="#" id="settingsLink">Settings</a>
+    <a href="#" id="leaderboardLink">Leaderboard</a>
+    <a href="#" id="helpLink">Help</a>
+    <a href="./TILE.html" id="saveLink">Save</a>
+  </div>
 
-    <script>
-        const gameTitle = document.getElementById('gameTitle');
-        const logo = document.getElementById('logo');
-        const dropdownMenu = document.getElementById('dropdownMenu');
+  <div class="game-container" id="gameContainer"></div>
 
-        // Toggle dropdown visibility
-        gameTitle.addEventListener('click', () => {
-            dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
+  <script>
+    const gameTitle = document.getElementById('gameTitle');
+    const logo = document.getElementById('logo');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    // Toggle dropdown visibility
+    gameTitle.addEventListener('click', () => {
+      dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    logo.addEventListener('click', () => {
+      dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Close dropdown if clicking elsewhere
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('.header') && dropdownMenu.style.display === 'flex') {
+        dropdownMenu.style.display = 'none';
+      }
+    });
+
+    const symbols = ['🍎', '🍌', '🍇', '🍉', '🍒', '🍓', '🍍', '🥝', '🍑', '🥭', '🍊', '🍋', '🍈', '🍏', '🥥', '🥦', '🍄', '🥬'];
+    let tiles = [];
+    let firstTile = null;
+    let secondTile = null;
+    let matches = 0;
+    const totalPairs = symbols.length;
+    let coins = localStorage.getItem('coins') ? parseInt(localStorage.getItem('coins')) : 100;
+
+    function updateCoinDisplay() {
+      const coinCount = document.getElementById('coinCount');
+      if (coinCount) {
+        coinCount.textContent = coins;
+        localStorage.setItem('coins', coins);
+      }
+    }
+
+    function initializeGame() {
+      matches = 0;
+      tiles = [...symbols.slice(0, 18), ...symbols.slice(0, 18)].sort(() => 0.5 - Math.random());
+      renderTiles();
+      showAllTilesTemporarily();
+    }
+
+    function renderTiles() {
+      const gameContainer = document.getElementById('gameContainer');
+      gameContainer.innerHTML = '';
+      tiles.forEach((symbol, index) => {
+        const tile = createTile(symbol, index);
+        gameContainer.appendChild(tile);
+      });
+    }
+
+    function createTile(symbol, index) {
+      const tile = document.createElement('div');
+      tile.classList.add('tile');
+      tile.dataset.symbol = symbol;
+      tile.dataset.index = index;
+      tile.addEventListener('click', () => handleTileClick(tile));
+      return tile;
+    }
+
+    function handleTileClick(tile) {
+      if (tile.classList.contains('revealed') || tile.classList.contains('matched') || secondTile) return;
+
+      tile.classList.add('revealed');
+      tile.textContent = tile.dataset.symbol;
+
+      if (!firstTile) {
+        firstTile = tile;
+      } else {
+        secondTile = tile;
+        if (firstTile.dataset.symbol === secondTile.dataset.symbol) {
+          setTimeout(() => {
+            firstTile.classList.add('matched');
+            secondTile.classList.add('matched');
+            firstTile.classList.remove('revealed');
+            secondTile.classList.remove('revealed');
+            matches++;
+            earnCoins(5);
+            checkWin();
+            firstTile = null;
+            secondTile = null;
+          }, 500);
+        } else {
+          setTimeout(() => {
+            firstTile.classList.remove('revealed');
+            secondTile.classList.remove('revealed');
+            firstTile.textContent = '';
+            secondTile.textContent = '';
+            firstTile = null;
+            secondTile = null;
+          }, 1000);
+        }
+      }
+    }
+
+    function earnCoins(amount) {
+      coins += amount;
+      updateCoinDisplay();
+    }
+
+    function checkWin() {
+      if (matches === totalPairs) {
+        setTimeout(() => {
+          alert('You win!');
+          initializeGame();
+        }, 500);
+      }
+    }
+
+    function showAllTilesTemporarily() {
+      const tiles = document.querySelectorAll('.tile');
+      tiles.forEach(tile => {
+        tile.classList.add('revealed');
+        tile.textContent = tile.dataset.symbol;
+      });
+
+      setTimeout(() => {
+        tiles.forEach(tile => {
+          tile.classList.remove('revealed');
+          tile.textContent = '';
         });
+      }, 2000);
+    }
 
-        logo.addEventListener('click', () => {
-            dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
-        });
-
-        // Optional: Close the dropdown when clicking anywhere else
-        document.addEventListener('click', (event) => {
-            if (!event.target.closest('.header') && dropdownMenu.style.display === 'flex') {
-                dropdownMenu.style.display = 'none';
-            }
-        });
-
-        const symbols = ['🍎', '🍌', '🍇', '🍉', '🍒', '🍓', '🍍', '🥝', '🍑', '🥭', '🍊', '🍋', '🍈', '🍏', '🥥', '🥦', '🍄', '🥬'];
-        let tiles = [];
-        let firstTile = null;
-        let secondTile = null;
-        let matches = 0;
-        let totalPairs = symbols.length;
-        let coins = localStorage.getItem('coins') ? parseInt(localStorage.getItem('coins')) : 100;
-
-        function updateCoinDisplay() {
-            document.getElementById('coinCount').textContent = coins;
-            localStorage.setItem('coins', coins);
-        }
-
-        function initializeGame() {
-            matches = 0;
-            tiles = [...symbols.slice(0, 18), ...symbols.slice(0, 18)].sort(() => 0.5 - Math.random());
-            renderTiles();
-            showAllTilesTemporarily();
-        }
-
-        function renderTiles() {
-            const gameContainer = document.getElementById('gameContainer');
-            gameContainer.innerHTML = '';
-            tiles.forEach((symbol, index) => {
-                const tile = createTile(symbol, index);
-                gameContainer.appendChild(tile);
-            });
-        }
-
-        function createTile(symbol, index) {
-            const tile = document.createElement('div');
-            tile.classList.add('tile');
-            tile.dataset.symbol = symbol;
-            tile.dataset.index = index;
-            tile.addEventListener('click', () => handleTileClick(tile));
-            return tile;
-        }
-
-        function handleTileClick(tile) {
-            if (tile.classList.contains('revealed') || tile.classList.contains('matched') || secondTile) return;
-
-            tile.classList.add('revealed');
-            tile.textContent = tile.dataset.symbol;
-
-            if (!firstTile) {
-                firstTile = tile;
-            } else {
-                secondTile = tile;
-                if (firstTile.dataset.symbol === secondTile.dataset.symbol) {
-                    setTimeout(() => {
-                        firstTile.classList.add('matched');
-                        secondTile.classList.add('matched');
-                        firstTile.classList.remove('revealed');
-                        secondTile.classList.remove('revealed');
-                        matches++;
-                        earnCoins(5);
-                        checkWin();
-                        firstTile = null;
-                        secondTile = null;
-                    }, 500);
-                } else {
-                    setTimeout(() => {
-                        firstTile.classList.remove('revealed');
-                        secondTile.classList.remove('revealed');
-                        firstTile.textContent = '';
-                        secondTile.textContent = '';
-                        firstTile = null;
-                        secondTile = null;
-                    }, 1000);
-                }
-            }
-        }
-
-        function earnCoins(amount) {
-            coins += amount;
-            updateCoinDisplay();
-        }
-
-        function checkWin() {
-            if (matches === totalPairs) {
-                setTimeout(() => {
-                    alert('You win!');
-                    initializeGame();
-                }, 500);
-            }
-        }
-
-        function showAllTilesTemporarily() {
-            const tiles = document.querySelectorAll('.tile');
-            tiles.forEach(tile => {
-                tile.classList.add('revealed');
-                tile.textContent = tile.dataset.symbol;
-            });
-
-            setTimeout(() => {
-                tiles.forEach(tile => {
-                    tile.classList.remove('revealed');
-                    tile.textContent = '';
-                });
-            }, 2000);
-        }
-
-        initializeGame();
-        updateCoinDisplay();
-    </script>
+    initializeGame();
+    updateCoinDisplay();
+  </script>
 </body>
 
 </html>
+
